@@ -80,5 +80,33 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include
 ~~~
 
-**工程的情况下使用compile_commands.json**<br/>
+**工程的情况下使用compile_commands.json**
+
 &emsp;如果你使用的是大工程的话，可以考虑编写compile_commands.json文件：
+
+~~~json
+[
+    {
+    "arguments": ["c++", "-Iinclude", "-std=c++11", "main.cpp"],
+    "file": "main.cpp"
+    }
+]
+~~~
+- arguments
+  - 通过将编译指令各个部分拆开称数组。
+- file
+  - 则指定了你要编译的文件。
+
+但是每次都编写compile_commands.json也很烦，有一些工具可以帮助你自动生成。
+
+**CMake**
+
+&emsp;如果你使用的是CMake，可以加上构建选项`-DCMAKE_EXPORT_COMPILE_COMMANDS=YES`让cmkae自动生成。
+
+**bear**
+
+&emsp;bear工具可以帮助你生成，在MacOS上使用`brew install bear`安装之后即可使用。 bear可以根据多个构建工具来帮助你生成，如果你使用的是make，那么可以使用: `bear make`来自动生成。
+
+**其它的构建工具**
+
+&emsp;[这里](https://github.com/MaskRay/ccls/wiki/Project-Setup#compile_commandsjson)
