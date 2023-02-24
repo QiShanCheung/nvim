@@ -80,7 +80,7 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include
 ~~~
 
-**工程的情况下使用compile_commands.json**
+#### 4. 工程的情况下使用compile_commands.json
 
 &emsp;如果你使用的是大工程的话，可以考虑编写compile_commands.json文件：
 
