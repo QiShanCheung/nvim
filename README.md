@@ -61,8 +61,7 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 
 -std=c++17
 ~~~
-> 注：里面不能使用执行命令
-然后每次打开nvim，ccls都会检查这个文件，并且根据这个文件进行补全配置。
+> 注：这是 ccls 的配置文件，用于指定编译器标志和头文件目录。
 
 **MacOS特殊情况**
 
