@@ -20,7 +20,7 @@ brew install ccls
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cc","cpp", "c++", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json", ".git/", ".hg/", ".vscode", ".vim/"],
+      "rootPatterns": [".ccls-root", "compile_commands.json", ".git/", ".hg/", ".vscode", ".vim/"], # 指定搜索项目根目录的模式。这些模式可以是文件名、文件夹名或正则表达式。
       "initializationOptions": {
         "highlight": {"lsRanges": true},
         "cache": {
