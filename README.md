@@ -130,3 +130,11 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 &emsp;`vimspector会`自动下载微软开发的调试适配器`cpptools-linux.vsix`到`your-vimspector-path/gadgets/linux/download/vscode-cpptools/0.27.0/`中。如果是在mac上，linux会被改成mac。
 
 3. 配置项目的调试配置文件（创建.vimspector.json，或设置g:vimspector_configurations）see[参考指南](https://puremourning.github.io/vimspector/configuration.html)
+
+
+### 可能遇到的问题
+**1. NeoVim: vimspector unavailable: Requires Vim compiled with +python3**
+```
+pip3 install neovim -i https://pypi.tuna.tsinghua.edu.cn/simple/
+-i参数指定pip源
+```
