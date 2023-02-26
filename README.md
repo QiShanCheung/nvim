@@ -114,6 +114,17 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 ## Vimspector
 [vimspector](https://github.com/puremourning/vimspector)
 
-###下载
+### 下载
 1. Plugin 'puremourning/vimspector'
 2. 安装'gadgets'(debug adapter) - see [here for installation commands](https://github.com/puremourning/vimspector#install-some-gadgets) and [select gadgets to install](https://github.com/puremourning/vimspector#supported-languages)
+
+&emsp;进入vimspector的安装目录，执行：
+~~~BASH
+./install_gadget.py <language-name>
+~~~
+&emsp;`install_gadget.py`会自动下载`<language-name>`所需的调式适配器并进行相应配置，`--help`可以查看`vimspector`锁支持的全部语言。
+&emsp;以在Linux环境上打开C/C++支持为例：
+~~~BASH
+./install_gadget.py --enable-c
+~~~
+&emsp;`vimspector会`自动下载微软开发的调试适配器`cpptools-linux.vsix`到`your-vimspector-path/gadgets/linux/download/vscode-cpptools/0.27.0/`中。如果是在mac上，linux会被改成mac。
