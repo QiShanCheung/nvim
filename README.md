@@ -2,6 +2,7 @@
 
 - [ccls配置](#nvim利用ccls进行代码补全)
 - [vimspector](#Vimspector)
+- [FAQ](#FAQ)
 
 ## nvim利用ccls进行代码补全
 &emsp;coc.vim补全有三种lsp：clangd、ccls、cquery。
@@ -226,9 +227,9 @@ Vimspector的配置可以存在于以下文件中：
 
 ### 4.变量
 &emsp;Vimspector 提供了比较灵活的变量定义功能，可以方便的自定义配置。
+<img src="https://github.com/QiShanCheung/nvim/blob/main/img/variable.png" height="70%" width="70%">
 
-
-### 可能遇到的问题
+## FAQ
 **1. NeoVim: vimspector unavailable: Requires Vim compiled with +python3**
 ```
 pip3 install neovim -i https://pypi.tuna.tsinghua.edu.cn/simple/
