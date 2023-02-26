@@ -264,6 +264,15 @@ Example:
 &emsp;Vimspector 提供了比较灵活的变量定义功能，可以方便的自定义配置。
 <img src="https://github.com/QiShanCheung/nvim/blob/main/img/variable.png" height="70%" width="70%">
 
+### 5.快捷键
+&emsp;Vimspector 预设了vscode mode 和 human mode 两套键盘映射（快捷键）
+
+开启human mode：
+~~~
+let g:vimspector_enable_mappings = 'HUMAN'
+~~~
+
+
 ## FAQ
 **1. NeoVim: vimspector unavailable: Requires Vim compiled with +python3**
 ```
