@@ -115,7 +115,6 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 
 
 ## Vimspector
-[vimspector](https://github.com/puremourning/vimspector)
 
 ### 1.安装插件
 1. Plugin 'puremourning/vimspector'
@@ -225,6 +224,8 @@ Vimspector的配置可以存在于以下文件中：
   - `cwd`：程序运行的当前工作目录。
   - `externalConsole`：是否使用外部控制台窗口。如果设置为 true，则会在调试过程中使用一个新的终端窗口来显示程序的输出，否则会将输出显示在 vimspector 插件的窗口中。
 
+### 4.变量
+&emsp;Vimspector 提供了比较灵活的变量定义功能，可以方便的自定义配置。
 
 
 ### 可能遇到的问题
