@@ -225,6 +225,41 @@ Vimspector的配置可以存在于以下文件中：
   - `cwd`：程序运行的当前工作目录。
   - `externalConsole`：是否使用外部控制台窗口。如果设置为 true，则会在调试过程中使用一个新的终端窗口来显示程序的输出，否则会将输出显示在 vimspector 插件的窗口中。
 
+Example:
+~~~json
+{
+  "configurations": {
+    "Vim - run a test": {                           // 配置名
+      "adapter": "vscode-cpptools",                 // 使用的调试适配器
+      "configuration": {                            // 具体的配置
+        "type":    "cppdbg",                        // 调试器类型：cppdbg(GDB/LLDB) 或 cppvsdbg(VISUAL STUDIO)
+        "request": "launch",                        // 调试类型：launch（启动程序） 或 attach（连接进程）
+        "program": "${workspaceRoot}/src/vim",      // 带有调试信息的可执行文件目录
+        "args": [                                   // 程序的参数，一个 json 数组
+          "-f",
+          "-u", "unix.vim",
+          "-U", "NONE",
+          "--noplugin",
+          "--not-a-term",
+          "-S", "runtest.vim",
+          "${Test}.vim"                             // 未定义的变量，用户输入
+        ],
+        "cwd": "${workspaceRoot}/src/testdir",      // 当前工作目录
+        "environment": [                            // 环境变量
+          { "name": "VIMRUNTIME", "value": "${workspaceRoot}/runtime" }
+        ],
+        "externalConsole": true,                    // 是否使用外部终端
+        "stopAtEntry": true,                        // 是否在程序入口点暂停
+        "MIMode": "lldb",                           // 使用 LLDB 作为调试器
+        "logging": {                                // 调试适配器的输出
+          "engineLogging": false                    // 是否打印调试适配器产生的信息，默认不打印
+        }
+      }
+    }
+  }
+}
+~~~
+
 ### 4.变量
 &emsp;Vimspector 提供了比较灵活的变量定义功能，可以方便的自定义配置。
 <img src="https://github.com/QiShanCheung/nvim/blob/main/img/variable.png" height="70%" width="70%">
@@ -235,3 +270,4 @@ Vimspector的配置可以存在于以下文件中：
 pip3 install neovim -i https://pypi.tuna.tsinghua.edu.cn/simple/
 -i参数指定pip源
 ```
+[引用](https://www.cnblogs.com/kongj/p/12831690.html)
