@@ -138,3 +138,7 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 pip3 install neovim -i https://pypi.tuna.tsinghua.edu.cn/simple/
 -i参数指定pip源
 ```
+**2. Unable to find any debug configurations. You need to tell vimspector how to launch your application.**
+```
+
+```
