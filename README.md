@@ -1,5 +1,8 @@
 # nvim
 
+- [ccls配置](#nvim利用ccls进行代码补全)
+- [vimspector](#Vimspector)
+
 ## nvim利用ccls进行代码补全
 &emsp;coc.vim补全有三种lsp：clangd、ccls、cquery。
 
@@ -114,22 +117,114 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 ## Vimspector
 [vimspector](https://github.com/puremourning/vimspector)
 
-### 下载
+### 1.安装插件
 1. Plugin 'puremourning/vimspector'
 2. 安装'gadgets'(debug adapter) - see [here for installation commands](https://github.com/puremourning/vimspector#install-some-gadgets) and [select gadgets to install](https://github.com/puremourning/vimspector#supported-languages)
 
+### 2.下载gadgets
 &emsp;进入vimspector的安装目录，执行：
 ~~~BASH
 ./install_gadget.py <language-name>
 ~~~
-&emsp;`install_gadget.py`会自动下载`<language-name>`所需的调式适配器并进行相应配置，`--help`可以查看`vimspector`锁支持的全部语言。
+&emsp;`install_gadget.py`会自动下载`<language-name>`所需的调式适配器并进行相应配置，`--help`可以查看`vimspector`所支持的全部语言。
 &emsp;以在Linux环境上打开C/C++支持为例：
 ~~~BASH
 ./install_gadget.py --enable-c
 ~~~
-&emsp;`vimspector会`自动下载微软开发的调试适配器`cpptools-linux.vsix`到`your-vimspector-path/gadgets/linux/download/vscode-cpptools/0.27.0/`中。如果是在mac上，linux会被改成mac。
+&emsp;`vimspector会`自动下载微软开发的调试适配器`cpptools-linux.vsix`到`your-vimspector-path/gadgets/linux/download/vscode-cpptools/0.27.0/`中。如果是在mac上,linux会被改成mac。
 
-3. 配置项目的调试配置文件（创建.vimspector.json，或设置g:vimspector_configurations）see[参考指南](https://puremourning.github.io/vimspector/configuration.html)
+&emsp;如果只想使用脚本添加一个新适配器而不破坏现有适配器，添加 `--update-gadget-config`，如下所示：
+~~~BASH
+./install_gadget.py --enable-tcl
+./install_gadget.py --enable-rust --update-gadget-config
+./install_gadget.py --enable-java --update-gadget-config
+~~~
+
+&emsp;**gadget目录**
+
+默认情况下，Vimspector使用以下目录查找名为`.gadgets.json`的文件：`<path-to-vimspector>/gadgets/<os>`。此路径作为vimspector变量`${gadgetDir}`。
+格式与`.vimspector.json`相同，but only the adapters key is used:
+
+Example:
+~~~json
+{
+  "adapters": {
+    "lldb-vscode": {
+      "variables": {
+        "LLVM": {
+          "shell": "brew --prefix llvm"
+        }
+      },
+      "attach": {
+        "pidProperty": "pid",
+        "pidSelect": "ask"
+      },
+      "command": [
+        "${LLVM}/bin/lldb-vscode"
+      ],
+      "env": {
+        "LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY": "YES"
+      },
+      "name": "lldb"
+    },
+    "vscode-cpptools": {
+      "attach": {
+        "pidProperty": "processId",
+        "pidSelect": "ask"
+      },
+      "command": [
+        "${gadgetDir}/vscode-cpptools/debugAdapters/bin/OpenDebugAD7"
+      ],
+      "name": "cppdbg"
+    }
+  }
+}
+~~~
+
+Vimspector的配置可以存在于以下文件中：
+~~~
+1. your-path-to-vimspector/gadgets/<os>/.gadgets.d/*.json ：这些文件是用户自定义的。
+2. 在 Vim 工作目录向父目录递归搜索到的第一个.gadgets.json。
+3. .vimspector.json 中定义的adapters。
+~~~
+编号代表配置文件的优先级，编号越大优先级越高，高优先级的配置文件将覆盖低优先级的配置文件中的的adapters。
+
+
+### 3.调试适配器配置
+&emsp;Vimspector有两类配置：<br/>
+- 调试适配器的配置
+  - 如何启动或连接到调试适配器
+  - 如何 attach 到某进程
+  - 如何设置远程调试
+- 调式会话的配置
+  - 使用哪个调试适配器
+  - launch 或 attach 到进程
+  - 是否预先设置断点，在何处设置断点
+  
+**调试适配器配置**
+
+&emsp;该配置就是上述介绍gadget目录中的`.gadgets.json`文件，这个配置在打开 vimspector 对某语言的支持时就已经自动设置好了。
+
+**调试会话配置**
+
+&emsp;项目的调试会话的文件位于以下两个位置：
+~~~
+1. <your-path-to-vimspector>/configurations/<os>/<filetype>/*.json
+2. 项目根目录中的 .vimspector.json
+~~~
+
+&emsp;在 macOS 上，我强烈建议对 C 和 C++ 项目使用 CodeLLDB。它真的很棒，依赖性更少，并且不会在另一个终端窗口中打开控制台应用程序。每当打开一个新的调试会话时，vimspector 都会在当前目录向父目录递归搜索，如果查找到了 .vimspector.json，则使用其中的配置，`并将其所在的目录设定为项目根目录`;如果未查找到，则使用 vimspector 安装目录中的配置文件，将打开的文件的目录设置为项目根目录。
+
+**配置选项说明**
+
+`configurations`主要包含以下字段：
+- `configuration`：调试器适配器的配置信息，具体格式取决于所使用的适配器。比如在使用 gdb 调试器时，可以通过该参数设置 gdb 的命令行参数。
+  - `request`：调试请求的类型。通常为 "launch"，表示启动一个新的进程并开始调试。也可以为 "attach"，表示连接到一个已经运行的进程并开始调试。
+  - `program`：要调试的程序的路径。
+  - `args`：传递给程序的命令行参数。
+  - `cwd`：程序运行的当前工作目录。
+  - `externalConsole`：是否使用外部控制台窗口。如果设置为 true，则会在调试过程中使用一个新的终端窗口来显示程序的输出，否则会将输出显示在 vimspector 插件的窗口中。
+
 
 
 ### 可能遇到的问题
@@ -137,8 +232,4 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 ```
 pip3 install neovim -i https://pypi.tuna.tsinghua.edu.cn/simple/
 -i参数指定pip源
-```
-**2. Unable to find any debug configurations. You need to tell vimspector how to launch your application.**
-```
-
 ```
