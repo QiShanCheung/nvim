@@ -1,6 +1,6 @@
 # nvim
 
-### nvim利用ccls进行代码补全
+## nvim利用ccls进行代码补全
 &emsp;coc.vim补全有三种lsp：clangd、ccls、cquery。
 
 ### ccls的配置
@@ -109,3 +109,11 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -S . -B .vsco
 **其它的构建工具**
 
 &emsp;[这里](https://github.com/MaskRay/ccls/wiki/Project-Setup#compile_commandsjson)
+
+
+## Vimspector
+[vimspector](https://github.com/puremourning/vimspector)
+
+###下载
+1. Plugin 'puremourning/vimspector'
+2. 安装'gadgets'(debug adapter) - see [here for installation commands](https://github.com/puremourning/vimspector#install-some-gadgets) and [select gadgets to install](https://github.com/puremourning/vimspector#supported-languages)
